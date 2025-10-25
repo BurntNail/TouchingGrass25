@@ -14,98 +14,105 @@
     <title>My Website</title>
     <script src="script.js"></script>
     <style>
-       @keyframes backgroundFade {
-        0% { background-image: url(Assets/image1.jpg); }
-        16% { background-image: url(Assets/image2.jpg); }
-        33% { background-image: url(Assets/image3.jpg); }
-        49% { background-image: url(Assets/image4.jpg); }
-        66% { background-image: url(Assets/image5.jpg); }
-        83% { background-image: url(Assets/image6.jpg); }
-        100% { background-image: url(Assets/image1.jpg); }
-    }
+        @keyframes backgroundFade {
+            0% {
+                background-image: url(Assets/image1.jpg);
+            }
+            16% {
+                background-image: url(Assets/image2.jpg);
+            }
+            33% {
+                background-image: url(Assets/image3.jpg);
+            }
+            49% {
+                background-image: url(Assets/image4.jpg);
+            }
+            66% {
+                background-image: url(Assets/image5.jpg);
+            }
+            83% {
+                background-image: url(Assets/image6.jpg);
+            }
+            100% {
+                background-image: url(Assets/image1.jpg);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="background next"></div>
-    <header>
-        <h1>Green Analysis</h1>
-        <div class="button-container">
+<div class="background"></div>
+<div class="background next"></div>
+<header>
+    <h1>Green Analysis</h1>
+    <div class="button-container">
         <button class="fancy-button" onclick="window.location.href='index.html'">Home</button>
         <button class="fancy-button" onclick="window.location.href='visuals.html'">Submission</button>
         <button class="fancy-button" onclick="window.location.href='forums.html'">Forums</button>
-        </div>
-    </header>
-    <div class = "blog">
-        <div class="container">
-            <title>Welcome to Team George's Website</title>
-            <p>Here is a leaderboard and the top 3 greenest user generated images</p>
-        </div>
-        
-        <div class="text-columns">
-            <div class="column">
-                <p>Combined Scores</p>
-            </div>
-            <div class="column">
-                <p>Best individual scores</p>
-            </div>
-        </div>
+    </div>
+</header>
+<div class="blog">
+    <div class="container">
+        <title>Welcome to Team George's Website</title>
+        <p>Here is a leaderboard and the top 3 greenest user generated images</p>
+    </div>
 
-        <div class="leaderboard-section">
-            <div class="leaderboard">
-                <table>
+    <div class="text-columns">
+        <div class="column">
+            <p>Combined Scores</p>
+        </div>
+        <div class="column">
+            <p>Best individual scores</p>
+        </div>
+    </div>
+
+    <div class="leaderboard-section">
+        <div class="leaderboard">
+            <table>
+                <thead>
                 <tr>
                     <th>Rank</th>
                     <th>Name</th>
                     <th>Score</th>
                 </tr>
-                </table>
-            </div>
-
-            <!-- <div class="image-column">
-                <div class="image-frame"><img src="Assets/image1.jpg" alt=""></div>
-                <div class="image-frame"><img src="Assets/image2.jpg" alt=""></div>
-                <div class="image-frame"><img src="Assets/image3.jpg" alt=""></div>
-            </div>
-            <div class="image-column">
-                <div class = "name-frame"> <h1>hello</h1></div>
-                <div class = "name-frame"> <h1>hello</h1></div>
-                <div class = "name-frame"> <h1>hello</h1></div>
-            </div> -->
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
-    <div class="preload">
+</div>
+<div class="preload">
     <img src="Assets/image1.jpg" alt="">
     <img src="Assets/image2.jpg" alt="">
     <img src="Assets/image3.jpg" alt="">
     <img src="Assets/image4.jpg" alt="">
     <img src="Assets/image5.jpg" alt="">
     <img src="Assets/image6.jpg" alt="">
-    </div>
+</div>
 <footer>
-    <p class = "Footer-text"> Jack Maguire, Michalina Dymitruk, Simon Lynch</p>
+    <p class="Footer-text"> Jack Maguire, Michalina Dymitruk, Simon Lynch</p>
     <div class="social-icons">
-    <a href="https://github.com/BurntNail/TouchingGrass25" class="icon github"><i class="fab fa-github"></i></a>
-    <a href="https://www.instagram.com/sta.chud.soc?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="icon instagram"><i class="fab fa-instagram"></i></a>
-    
-  </div>
+        <a href="https://github.com/BurntNail/TouchingGrass25" class="icon github"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/sta.chud.soc?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+           class="icon instagram"><i class="fab fa-instagram"></i></a>
+
+    </div>
 </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const images = [
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const images = [
             "Assets/image1.jpg",
             "Assets/image2.jpg",
             "Assets/image3.jpg",
             "Assets/image4.jpg",
             "Assets/image5.jpg",
             "Assets/image6.jpg"
-            ];
+        ];
 
-            let index = 0;
-            const bg1 = document.querySelector('.background');
-            const bg2 = document.querySelector('.background.next');
+        let index = 0;
+        const bg1 = document.querySelector('.background');
+        const bg2 = document.querySelector('.background.next');
 
-            function crossfade() {
+        function crossfade() {
             index = (index + 1) % images.length;
             bg2.style.backgroundImage = `url(${images[index]})`;
             bg2.style.opacity = 1;
@@ -114,10 +121,10 @@
                 bg1.style.backgroundImage = bg2.style.backgroundImage;
                 bg2.style.opacity = 0;
             }, 2000); // fade duration
-            }
+        }
 
-            setInterval(crossfade, 7000); // every 7s
-        });
-  </script>
+        setInterval(crossfade, 7000); // every 7s
+    });
+</script>
 </body>
 </html>
