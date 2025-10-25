@@ -7,9 +7,12 @@ edition = "2024"
 axum = { version = "0.8.6", features = ["macros", "multipart"] }
 base64 = "0.22.1"
 futures = "0.3.31"
+http = "1.3.1"
 image = "0.25.8"
+mime_guess = "2.0.5"
 redis = { version = "0.32.7", features = ["aio", "tokio-comp"] }
 redis-macros = "0.5.6"
+reqwest = "0.12.24"
 rust-s3 = "0.37.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
