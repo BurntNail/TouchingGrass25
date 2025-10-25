@@ -1,7 +1,7 @@
 use crate::errors::IslandError;
 use crate::state::{IslandState, LeaderboardEntry};
 use axum::extract::{State};
-use axum::response::{IntoResponse, Sse, sse::{Event as AxumSseEvent, KeepAlive}, Redirect};
+use axum::response::{IntoResponse, Sse, sse::{Event as AxumSseEvent, KeepAlive}};
 use axum::{Form, Json};
 use base64::Engine;
 use base64::prelude::BASE64_STANDARD;

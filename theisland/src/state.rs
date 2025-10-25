@@ -1,12 +1,10 @@
-use crate::backend::get_leaderboard;
-use axum::extract::State;
 use serde::Serialize;
 use std::cmp::Reverse;
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tokio::sync::broadcast::{Receiver, Sender, channel};
-use tracing::{error, info};
+use tracing::error;
 use uuid::Uuid;
 
 #[derive(Clone)]

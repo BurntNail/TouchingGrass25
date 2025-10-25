@@ -24,8 +24,12 @@ async fn main() {
 
     let state = IslandState::default();
 
+    for (name, score) in &[("Alice", 123), ("Bob", 789), ("Charlie", 456)] {
+        state.add_score(state.start_submission().await, name.to_string(), *score).await;
+    }
+
     let app = Router::new()
-        .route("/", get(Html(include_str!("../testingforms.html"))))
+        .route("/", get(Html(include_str!("testingforms.html"))))
         .route("/start_grass", post(start_grass))
         .route("/submit_grass", post(submit_grass))
         .route("/leaderboard", get(get_leaderboard))
