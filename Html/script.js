@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 rankElement.innerText = rank;
                 row.appendChild(rankElement);
                 if (rank <= 3) {
-                    rankElement.style.color = "ForestGreen";
+                    rankElement.style.color = "#06661e";
                 } else {
                     rankElement.style.color = "black";
                 }
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nameElement.innerText = leaderboardEntry.person;
                 row.appendChild(nameElement);
                 if (rank <= 3) {
-                    nameElement.style.color = "ForestGreen";
+                    nameElement.style.color = "#06661e";
                 } else {
                     nameElement.style.color = "black";
                 }
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 scoreElement.innerText = leaderboardEntry.score;
                 row.appendChild(scoreElement);
                 if (rank <= 3) {
-                    scoreElement.style.color = "ForestGreen";
+                    scoreElement.style.color = "#06661e";
                 } else {
                     scoreElement.style.color = "black";
                 }
@@ -66,7 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 headingElement.classList.add("name-frame");
 
                 let headingName = document.createElement("h1");
-                headingName.innerText = imageEntry.person;
+                headingName.innerText = `${imageEntry.person}: \n ${imageEntry.image_score}`;
+
+                
 
                 headingElement.appendChild(headingName);
                 nameColumn.appendChild(headingElement);
