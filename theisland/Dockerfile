@@ -13,6 +13,9 @@ FROM rust:${RUST_VERSION}-slim-bullseye AS build
 ARG APP_NAME
 WORKDIR /app
 
+RUN apt update && apt upgrade
+RUN apt install -y pkg-config libssl-dev
+
 # Build the application.
 # Leverage a cache mount to /usr/local/cargo/registry/
 # for downloaded dependencies and a cache mount to /app/target/ for
@@ -45,8 +48,6 @@ EOF
 FROM debian:bullseye-slim AS final
 LABEL org.opencontainers.image.source=https://github.com/BurntNail/gradey
 
-#RUN apt update && apt upgrade
-#RUN apt install pkg-config libssl-dev
 RUN rm -rf /var/lib/apt && rm -rf /var/lib/dpkg && rm -rf /var/lib/cache && rm -rf /var/lib/log
 
 # Create a non-privileged user that the app will run under.

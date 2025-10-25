@@ -1,7 +1,7 @@
 use crate::errors::IslandError;
-use crate::state::{IslandState, LeaderboardEntry};
+use crate::state::{IslandState, LeaderboardEntry, TopImageEntry};
 use axum::extract::{State};
-use axum::response::{IntoResponse, Sse, sse::{Event as AxumSseEvent, KeepAlive}, Redirect};
+use axum::response::{IntoResponse, Sse, sse::{Event as AxumSseEvent, KeepAlive}};
 use axum::{Form, Json};
 use base64::Engine;
 use base64::prelude::BASE64_STANDARD;
@@ -14,9 +14,9 @@ use tokio_stream::wrappers::BroadcastStream;
 use tracing::info;
 use uuid::Uuid;
 
-pub async fn start_grass(State(state): State<IslandState>) -> Json<Uuid> {
-    let uuid = state.start_submission().await;
-    Json(uuid)
+pub async fn start_grass(State(state): State<IslandState>) -> Result<Json<Uuid>, IslandError> {
+    let uuid = state.start_submission().await?;
+    Ok(Json(uuid))
 }
 
 #[derive(Deserialize)]
@@ -33,11 +33,11 @@ pub async fn submit_grass(
         file,
     }): Form<SubmitGrassForm>,
 ) -> Result<impl IntoResponse, IslandError> {
-    let uuid = state.start_submission().await; //TODO: make this actually not just be useless lolll
+    let uuid = state.start_submission().await?; //TODO: make this actually not just be useless lolll
 
     let file_contents = BASE64_STANDARD.decode(file.as_bytes())?;
     info!("decoded");
-    let img = ImageReader::new(Cursor::new(file_contents))
+    let img = ImageReader::new(Cursor::new(&file_contents))
         .with_guessed_format()
         .unwrap()
         .decode()?;
@@ -59,13 +59,14 @@ pub async fn submit_grass(
 
     info!(?average_distance, ?score);
 
-    state.add_score(uuid, name, score).await;
+    state.add_score(uuid, name.clone(), score).await?;
+    state.set_potential_top_image(name, score, file_contents).await?;
 
     Ok("/")
 }
 
-pub async fn get_leaderboard(State(state): State<IslandState>) -> Json<Vec<LeaderboardEntry>> {
-    Json(state.get_leaderboard().await)
+pub async fn get_leaderboard(State(state): State<IslandState>) -> Result<Json<Vec<LeaderboardEntry>>, IslandError> {
+    Ok(Json(state.get_leaderboard().await?))
 }
 
 pub async fn leaderboard_sse(
@@ -81,4 +82,8 @@ pub async fn leaderboard_sse(
         });
 
     Sse::new(stream).keep_alive(KeepAlive::default())
+}
+
+pub async fn top_images (State(state): State<IslandState>) -> Result<Json<Vec<TopImageEntry>>, IslandError> {
+    state.get_top_images().await.map(Json)
 }
