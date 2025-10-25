@@ -25,6 +25,8 @@
     </style>
 </head>
 <body>
+    <div class="background"></div>
+    <div class="background next"></div>
     <header>
         <h1>My Website Header</h1>
         <div class="button-container">
@@ -32,28 +34,67 @@
         <button class="fancy-button" onclick="window.location.href='visuals.html'">Visualizations</button>
         </div>
     </header>
-    <div class="container">
-        <title>Welcome to My Website</title>
-        <p>This is a basic HTML template with some CSS styling.</p>
+    <div class = "blog">
+        <div class="container">
+            <title>Welcome to My Website</title>
+            <p>This is a basic HTML template with some CSS styling.</p>
+        </div>
+        <div>
+            <table>
+            <tr>
+                <th>Header1</th>
+                <th>Header2</th>
+                <th>Header3</th>
+            </tr>
+            <tr>
+                <td> Val1</td>
+                <td> Val2</td>
+                <td> Val3</td>
+            </tr>
+            <tr>
+                <td> Val 4</td>
+                <td> Val 5</td>
+                <td> Val 6</td>
+            </tr>
+            </table>
+        </div>
     </div>
-    <div>
-        <table>
-        <tr>
-            <th>Header1</th>
-            <th>Header2</th>
-            <th>Header3</th>
-        </tr>
-        <tr>
-            <td> Val1</td>
-            <td> Val2</td>
-            <td> Val3</td>
-        </tr>
-        <tr>
-            <td> Val 4</td>
-            <td> Val 5</td>
-            <td> Val 6</td>
-        </tr>
-        </table>
+    <div class="preload">
+    <img src="Assets/image1.jpg" alt="">
+    <img src="Assets/image2.jpg" alt="">
+    <img src="Assets/image3.jpg" alt="">
+    <img src="Assets/image4.jpg" alt="">
+    <img src="Assets/image5.jpg" alt="">
+    <img src="Assets/image6.jpg" alt="">
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = [
+            "Assets/image1.jpg",
+            "Assets/image2.jpg",
+            "Assets/image3.jpg",
+            "Assets/image4.jpg",
+            "Assets/image5.jpg",
+            "Assets/image6.jpg"
+            ];
+
+            let index = 0;
+            const bg1 = document.querySelector('.background');
+            const bg2 = document.querySelector('.background.next');
+
+            function crossfade() {
+            index = (index + 1) % images.length;
+            bg2.style.backgroundImage = `url(${images[index]})`;
+            bg2.style.opacity = 1;
+
+            setTimeout(() => {
+                bg1.style.backgroundImage = bg2.style.backgroundImage;
+                bg2.style.opacity = 0;
+            }, 2000); // fade duration
+            }
+
+            setInterval(crossfade, 7000); // every 7s
+        });
+  </script>
 </body>
 </html>
