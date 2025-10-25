@@ -52,8 +52,6 @@ footer {
 }
 title {
     font-size: 3rem;
-    color: #054a08;
-    text-shadow: 3px 3px #2ea634;
     font-weight: bold;
     margin-bottom: 20px;
     margin-top: 10%;;
@@ -61,11 +59,10 @@ title {
 }
 
 p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     font-weight: bold;
-    color: #054a08;
-    text-shadow: 1.3px 1.3px #2ea634;
+    color: rgb(0, 0, 0);
     text-align: center;
     margin: 0 20px 20px 20px;
 }
@@ -137,7 +134,7 @@ header h1 {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 3rem;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-top: 20px;
@@ -484,6 +481,26 @@ html {
   font-size: 1rem;
   margin-bottom: 10px;
   color: white;
-  text-shadow: 0px 0px;
-  background: rgba(0, 0, 0, 0);
+}
+
+.intro-text p {
+    text-align: left;
+    align-items: flex-start;
+    max-width: 800px; /* optional: keeps it from stretching too far */
+    margin: 0 auto 20px auto; /* centers the container but text inside is left-aligned */
+}
+
+.text-columns {
+    display: flex;            /* side by side */
+    gap: 200px;                /* space between columns */
+    max-width: 1200px;        /* optional max width */
+    margin: 10px 0% 0px 0; /* center container and give bottom spacing */
+}
+
+.text-columns .column {
+    flex: 1;                  /* each column takes equal width */
+    text-align: left;         /* left-align text inside each column */
+    max-width: 1000px;
+    margin-right: 40px;
+    margin-left: 40px;
 }
