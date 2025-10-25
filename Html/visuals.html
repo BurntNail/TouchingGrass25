@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
             background: linear-gradient(45deg, #1a5001, #c5c6a5, #006278);
@@ -15,7 +16,7 @@
 </head>
 <body>
     <header>
-        <h1>My Website Header</h1>
+        <h1>Green Analysis</h1>
         <div class="button-container">
         <button class="fancy-button" onclick="window.location.href='index.html'">Home</button>
         <button class="fancy-button" onclick="window.location.href='visuals.html'">Visualizations</button>
@@ -23,15 +24,16 @@
         
     </header>
    
-    <div class = "blog-container">
+    <div class = "blog">
         <title>Upload your image below and we'll tell you how green it is!</title>
         <div class = "container">
             <div class = "form-container">
             <form action="theisland.fly.dev/submit_grass">
+            <label for="UserName">Enter your name:</label>
+            <input type="text" id="UserName" name="UserName" required>
             <label for="myFile" class="fancy-button">Choose File</label>
-            <input type="file" id="myFile" name="filename" style="display: none;">
+            <input type="file" id="myFile" name="filename" style="display: none;" accept="image/png, image/jpg">
             <input type="submit" class ="submit-button" value="Submit">
-            </form>
             </form>
             </div>
         </div>
@@ -39,11 +41,25 @@
     <footer>
         <p>&copy; 2025 DataViz. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://www.linkedin.com" class="icon linkedin">LinkedIn</a>
-            <a href="https://github.com" class="icon github">GitHub</a>
-            <a href="https://www.instagram.com" class="icon instagram">Instagram</a>
-            <a href="https://www.youtube.com" class="icon youtube">YouTube</a>
+            <a href="https://www.linkedin.com" class="icon linkedin"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com" class="icon github"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com" class="icon instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com" class="icon youtube"><i class="fab fa-youtube"></i></a>
         </div>
     </footer>
+    <!-- Loading Popup -->
+    <div id="loadingPopup">
+    <div class="loading-content">
+        <div class="spinner"></div>
+        <p>Analyzing your image... 🌿</p>
+    </div>
+    </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+        // Show loading popup
+        event.preventDefault();
+        document.getElementById("loadingPopup").style.display = "flex";
+        });
+    </script>
 </body>
 </html>
