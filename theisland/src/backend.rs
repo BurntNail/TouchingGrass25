@@ -1,5 +1,5 @@
 use crate::errors::IslandError;
-use crate::state::{IslandState, LeaderboardEntry};
+use crate::state::{IslandState, LeaderboardEntry, TopImageEntry};
 use axum::extract::{State};
 use axum::response::{IntoResponse, Sse, sse::{Event as AxumSseEvent, KeepAlive}};
 use axum::{Form, Json};
@@ -37,7 +37,7 @@ pub async fn submit_grass(
 
     let file_contents = BASE64_STANDARD.decode(file.as_bytes())?;
     info!("decoded");
-    let img = ImageReader::new(Cursor::new(file_contents))
+    let img = ImageReader::new(Cursor::new(&file_contents))
         .with_guessed_format()
         .unwrap()
         .decode()?;
@@ -59,7 +59,8 @@ pub async fn submit_grass(
 
     info!(?average_distance, ?score);
 
-    state.add_score(uuid, name, score).await?;
+    state.add_score(uuid, name.clone(), score).await?;
+    state.set_potential_top_image(name, score, file_contents).await?;
 
     Ok("/")
 }
@@ -81,4 +82,8 @@ pub async fn leaderboard_sse(
         });
 
     Sse::new(stream).keep_alive(KeepAlive::default())
+}
+
+pub async fn top_images (State(state): State<IslandState>) -> Result<Json<Vec<TopImageEntry>>, IslandError> {
+    state.get_top_images().await.map(Json)
 }
