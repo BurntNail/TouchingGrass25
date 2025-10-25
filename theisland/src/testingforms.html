@@ -21,6 +21,21 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            fetch("/topimages").then(res => res.json().then(json => {
+                let el = document.createElement("ol");
+                for (const rowData of json) {
+                    console.log(rowData);
+
+                    let listElement = document.createElement("li");
+                    listElement.innerText = `${rowData.person} - ${rowData.image_score}`;
+
+                    el.appendChild(listElement);
+                }
+                document.querySelector("body").appendChild(el);
+            }));
+
+
+
             fetch("/leaderboard").then(res => res.json().then(json => {
                 const table = document.querySelector("tbody");
                 table.innerHTML = "";

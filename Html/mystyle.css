@@ -215,7 +215,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 40px;
+  gap: 20px;
   padding: 100px 60px;
   margin-top: 40px;
 }
@@ -244,7 +244,15 @@ h1 {
     font-size: 1.1rem;
     line-height: 1.6;
 }
-
+.blog-intro {
+    text-align: left;       /* override centered text */
+    align-self: flex-start; /* override flex centering if needed */
+    width: 100%;            /* optional: take full container width */
+    max-width: 600px;       /* optional: limit width */
+    margin-bottom: 20px;    /* spacing from next section */
+    margin-right: auto;   /* align to left */
+    margin-left: 10%;
+  }
 .blog-card .image-left {
     display: flex;
     flex-direction: row;
@@ -411,7 +419,6 @@ html {
   to { transform: scale(1); opacity: 1; }
 }
 
-
 .leaderboard-section {
   display: flex;
   align-items: stretch;
@@ -419,7 +426,7 @@ html {
   gap: 20px;
   width: 80%;
   max-width: 1200px;          /* optional: prevent it from stretching too wide */
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 /* Leaderboard box */

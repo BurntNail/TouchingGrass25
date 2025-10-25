@@ -46,7 +46,10 @@ EOF
 # reproducability is important, consider using a digest
 # (e.g.,    debian@sha256:ac707220fbd7b67fc19b112cee8170b41a9e97f703f588b2cdbbcdcecdd8af57).
 FROM debian:bullseye-slim AS final
-LABEL org.opencontainers.image.source=https://github.com/BurntNail/gradey
+LABEL org.opencontainers.image.source=https://github.com/BurntNail/touchinggrass25
+
+RUN apt-get update && apt-get install -y ca-certificates
+RUN update-ca-certificates
 
 RUN rm -rf /var/lib/apt && rm -rf /var/lib/dpkg && rm -rf /var/lib/cache && rm -rf /var/lib/log
 

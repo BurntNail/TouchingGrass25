@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Analysis — Forum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* === Base === */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #1a5001, #c5c6a5, #006278);
+            background-size: 200% 200%;
+            animation: gradientAnimation 10s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            background: rgba(20, 20, 20, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .fancy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #4720bc;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .fancy-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* === Forum Layout === */
+        .chat-container {
+            margin-top: 120px;
+            width: 90%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            text-align: left;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px 5px;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        /* Comment Style (YouTube-like) */
+        .comment {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+
+
+        .comment-content {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .text {
+            font-size: 0.95rem;
+            color: #eaeaea;
+            line-height: 1.4;
+        }
+
+        .chat-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .chat-input input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .chat-input button {
+            background: #27ae60;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #1f8b4f;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin-top: auto;
+            background: black;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .Footer-text {
+            margin-bottom: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-4px);
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Green Analysis</h1>
+        <div class="button-container">
+            <button class="fancy-button" onclick="window.location.href='index.html'">Home</button>
+            <button class="fancy-button" onclick="window.location.href='visuals.html'">Submission</button>
+            <button class="fancy-button" onclick="window.location.href='forums.html'">Forums</button>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-header">Community Forum</div>
+
+        <div class="chat-messages">
+            <div class="comment">
+                <div class="comment-content">
+                    <span class="username">EcoWarrior42</span>
+                    <span class="text">Welcome to the Green Analysis forum 🌿 Excited to see everyone’s projects!</span>
+                </div>
+            </div>
+
+            <div class="comment">
+                <div class="comment-content">
+                    <span class="username">GreenGuru</span>
+                    <span class="text">I just uploaded my image submission — can’t wait for feedback!</span>
+                </div>
+            </div>
+
+            <div class="comment">
+                
+                <div class="comment-content">
+                    <span class="username">NatureNerd</span>
+                    <span class="text">Loving the vibe here. Anyone else using drone shots for their greenery analysis?</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" placeholder="Add a public comment..." />
+            <button><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <footer>
+        <p class="Footer-text">Jack Maguire, Michalina Dymitruk, Simon Lynch</p>
+        <div class="social-icons">
+            <a href="https://github.com/BurntNail/TouchingGrass25" class="icon github"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/sta.chud.soc" class="icon instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>3
