@@ -30,8 +30,8 @@
             <div class = "form-container">
             <form action="theisland.fly.dev/submit_grass">
             <label for="UserName">Enter your name:</label>
-            <input type="text" id="UserName" name="UserName" required>
-            <label for="myFile" class="fancy-button">Choose File</label>
+            <input type="text" id="UserName" name="UserName" placeholder="Eg.  Bob Vance" required>
+            <label for="myFile" id="fileLabel" class="fancy-button">Choose File</label>
             <input type="file" id="myFile" name="filename" style="display: none;" accept="image/png, image/jpg">
             <input type="submit" class ="submit-button" value="Submit">
             </form>
@@ -54,6 +54,21 @@
         <p>Analyzing your image... 🌿</p>
     </div>
     </div>
+    <script>
+        const fileInput = document.getElementById("myFile");
+        const fileLabel = document.getElementById("fileLabel");
+
+        fileInput.addEventListener("change", function() {
+        if (fileInput.files.length > 0) {
+            const fileName = fileInput.files[0].name;
+            fileLabel.textContent = `✔ ${fileName} selected`;
+            fileLabel.style.backgroundColor = "#27ae60"; // green shade
+        } else {
+            fileLabel.textContent = "Choose File";
+            fileLabel.style.backgroundColor = "#4720bc"; // original color
+        }
+        });
+    </script>
     <script>
         document.querySelector("form").addEventListener("submit", function(event) {
         // Show loading popup
