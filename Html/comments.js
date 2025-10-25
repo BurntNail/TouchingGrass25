@@ -1,4 +1,5 @@
 function updateComments (json) {
+    console.log({json});
     const chatContainer = document.querySelector(".chat-messages");
     chatContainer.innerHTML = "";
 
