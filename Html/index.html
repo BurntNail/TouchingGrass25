@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- <link rel="preload" href="Assets/image1.jpg" as="image">
+    <link rel="preload" href="Assets/image2.jpg" as="image">
+    <link rel="preload" href="Assets/image3.jpg" as="image">
+    <link rel="preload" href="Assets/image4.jpg" as="image">
+    <link rel="preload" href="Assets/image5.jpg" as="image">
+    <link rel="preload" href="Assets/image6.jpg" as="image"> -->
     <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <script src="script.js"></script>
+    <style>
+       @keyframes backgroundFade {
+        0% { background-image: url(Assets/image1.jpg); }
+        16% { background-image: url(Assets/image2.jpg); }
+        33% { background-image: url(Assets/image3.jpg); }
+        49% { background-image: url(Assets/image4.jpg); }
+        66% { background-image: url(Assets/image5.jpg); }
+        83% { background-image: url(Assets/image6.jpg); }
+        100% { background-image: url(Assets/image1.jpg); }
+    }
+    </style>
 </head>
 <body>
+    <div class="background"></div>
+    <div class="background next"></div>
     <header>
         <h1>My Website Header</h1>
         <div class="button-container">
@@ -15,28 +35,66 @@
         <button class="fancy-button" onclick="window.location.href='visuals.html'">Visualizations</button>
         </div>
     </header>
-    <div class="container">
-        <title>Welcome to My Website</title>
-        <p>This is a basic HTML template with some CSS styling.</p>
+    <div class = "blog">
+        <div class="container">
+            <title>Welcome to My Website</title>
+            <p>This is a basic HTML template with some CSS styling.</p>
+        </div>
+        <div>
+            <table>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+            </table>
+        </div>
     </div>
-    <div>
-        <table>
-        <tr>
-            <th>Header1</th>
-            <th>Header2</th>
-            <th>Header3</th>
-        </tr>
-        <tr>
-            <td> Val1</td>
-            <td> Val2</td>
-            <td> Val3</td>
-        </tr>
-        <tr>
-            <td> Val 4</td>
-            <td> Val 5</td>
-            <td> Val 6</td>
-        </tr>
-        </table>
+    <div class="preload">
+    <img src="Assets/image1.jpg" alt="">
+    <img src="Assets/image2.jpg" alt="">
+    <img src="Assets/image3.jpg" alt="">
+    <img src="Assets/image4.jpg" alt="">
+    <img src="Assets/image5.jpg" alt="">
+    <img src="Assets/image6.jpg" alt="">
     </div>
+    <footer>
+  <p>&copy; 2025 DataViz. All rights reserved.</p>
+  <div class="social-icons">
+    <a href="https://www.linkedin.com" class="icon linkedin"><i class="fab fa-linkedin"></i></a>
+    <a href="https://github.com" class="icon github"><i class="fab fa-github"></i></a>
+    <a href="https://www.instagram.com" class="icon instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com" class="icon youtube"><i class="fab fa-youtube"></i></a>
+  </div>
+</footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = [
+            "Assets/image1.jpg",
+            "Assets/image2.jpg",
+            "Assets/image3.jpg",
+            "Assets/image4.jpg",
+            "Assets/image5.jpg",
+            "Assets/image6.jpg"
+            ];
+
+            let index = 0;
+            const bg1 = document.querySelector('.background');
+            const bg2 = document.querySelector('.background.next');
+
+            function crossfade() {
+            index = (index + 1) % images.length;
+            bg2.style.backgroundImage = `url(${images[index]})`;
+            bg2.style.opacity = 1;
+
+            setTimeout(() => {
+                bg1.style.backgroundImage = bg2.style.backgroundImage;
+                bg2.style.opacity = 0;
+            }, 2000); // fade duration
+            }
+
+            setInterval(crossfade, 7000); // every 7s
+        });
+  </script>
 </body>
 </html>

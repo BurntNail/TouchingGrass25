@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="mystyle.css">
+    <style>
+        body {
+            background: linear-gradient(45deg, #1a5001, #c5c6a5, #006278);
+            animation: gradientAnimation 10s ease infinite;
+            background-size: 200% 200%;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
-    
 </head>
 <body>
     <header>
@@ -16,16 +22,28 @@
         </div>
         
     </header>
-    <div class="container">
-        <title>Welcome to the Visualisations page</title>
-        <p>This is a basic HTML template with some CSS styling.</p>
+   
+    <div class = "blog-container">
+        <title>Upload your image below and we'll tell you how green it is!</title>
+        <div class = "container">
+            <div class = "form-container">
+            <form action="theisland.fly.dev/submit_grass">
+            <label for="myFile" class="fancy-button">Choose File</label>
+            <input type="file" id="myFile" name="filename" style="display: none;">
+            <input type="submit" class ="submit-button" value="Submit">
+            </form>
+            </form>
+            </div>
+        </div>
     </div>
-    <div class = "container">
-        <form action="theisland.fly.dev/submit_grass">
-        <input type="file" id="myFile" name="filename">
-        <input type="submit">
-        </form>
-    </div>
-    
+    <footer>
+        <p>&copy; 2025 DataViz. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com" class="icon linkedin">LinkedIn</a>
+            <a href="https://github.com" class="icon github">GitHub</a>
+            <a href="https://www.instagram.com" class="icon instagram">Instagram</a>
+            <a href="https://www.youtube.com" class="icon youtube">YouTube</a>
+        </div>
+    </footer>
 </body>
 </html>
