@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,9 +23,17 @@
         }
 
         @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         header {
@@ -94,7 +103,7 @@
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 20px 25px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
         }
@@ -105,7 +114,7 @@
             font-weight: bold;
             color: white;
             margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 10px;
         }
 
@@ -154,7 +163,7 @@
             align-items: center;
             gap: 10px;
             margin-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
             padding-top: 10px;
         }
 
@@ -164,13 +173,13 @@
             border: none;
             border-radius: 25px;
             outline: none;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             font-size: 1rem;
         }
 
         .chat-input input::placeholder {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .chat-input button {
@@ -215,6 +224,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Green Analysis</h1>
@@ -231,13 +241,16 @@
         <div class="chat-messages">
         </div>
 
-        <div class="chat-input">
-            <input type="text" placeholder="Username" />
-        </div>
-        <div class="chat-input">
-            <input type="text" placeholder="Add a public comment..." />
-            <button><i class="fas fa-paper-plane"></i></button>
-        </div>
+        <form action="https://theisland.fly.dev/comment" method="post">
+            <div class="chat-input">
+                <input type="text" name="name" placeholder="Username" />
+            </div>
+            <div class="chat-input">
+                <input type="text" name="content" placeholder="Add a public comment..." />
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </form>
+
 
     </div>
 
@@ -249,4 +262,5 @@
         </div>
     </footer>
 </body>
+
 </html>3

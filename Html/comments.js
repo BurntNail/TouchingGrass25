@@ -11,13 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const username = document.createElement("span");
                 const text = document.createElement("span");
+                username.classList.add("username");
+                text.classList.add("text");
+
                 username.innerText = comment.name;
                 text.innerText = comment.content;
 
                 innerDiv.appendChild(username);
                 innerDiv.appendChild(text);
                 wholeCommentContainer.appendChild(innerDiv);
-                chatContainer.appendChild(chatContainer);
+                chatContainer.appendChild(wholeCommentContainer);
             }
         });
     });
