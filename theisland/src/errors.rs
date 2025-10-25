@@ -13,14 +13,18 @@ pub enum IslandError {
     #[error("error decoding base64")]
     B64Decode(#[from] base64::DecodeError),
     #[error("error with image")]
-    Image(#[from] image::error::ImageError)
+    Image(#[from] image::error::ImageError),
+    #[error("missing env var")]
+    Env(#[from] std::env::VarError),
+    #[error("error with redis")]
+    Redis(#[from] redis::RedisError)
 }
 
 impl IntoResponse for IslandError {
     fn into_response(self) -> Response {
         eprintln!("{self:?}");
         match self {
-            Self::Json(_) | Self::Image(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            Self::Json(_) | Self::Image(_) | Self::Env(_) | Self::Redis(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::InvalidScore(_) | Self::B64Decode(_) => StatusCode::BAD_REQUEST,
             Self::Multipart(m) => m.status(),
         }.into_response()

@@ -14,9 +14,9 @@ use tokio_stream::wrappers::BroadcastStream;
 use tracing::info;
 use uuid::Uuid;
 
-pub async fn start_grass(State(state): State<IslandState>) -> Json<Uuid> {
-    let uuid = state.start_submission().await;
-    Json(uuid)
+pub async fn start_grass(State(state): State<IslandState>) -> Result<Json<Uuid>, IslandError> {
+    let uuid = state.start_submission().await?;
+    Ok(Json(uuid))
 }
 
 #[derive(Deserialize)]
@@ -33,7 +33,7 @@ pub async fn submit_grass(
         file,
     }): Form<SubmitGrassForm>,
 ) -> Result<impl IntoResponse, IslandError> {
-    let uuid = state.start_submission().await; //TODO: make this actually not just be useless lolll
+    let uuid = state.start_submission().await?; //TODO: make this actually not just be useless lolll
 
     let file_contents = BASE64_STANDARD.decode(file.as_bytes())?;
     info!("decoded");
@@ -59,13 +59,13 @@ pub async fn submit_grass(
 
     info!(?average_distance, ?score);
 
-    state.add_score(uuid, name, score).await;
+    state.add_score(uuid, name, score).await?;
 
     Ok("/")
 }
 
-pub async fn get_leaderboard(State(state): State<IslandState>) -> Json<Vec<LeaderboardEntry>> {
-    Json(state.get_leaderboard().await)
+pub async fn get_leaderboard(State(state): State<IslandState>) -> Result<Json<Vec<LeaderboardEntry>>, IslandError> {
+    Ok(Json(state.get_leaderboard().await?))
 }
 
 pub async fn leaderboard_sse(
