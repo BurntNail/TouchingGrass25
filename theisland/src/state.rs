@@ -7,6 +7,7 @@ use s3::{Bucket, Region};
 use serde::{Deserialize, Serialize};
 use sha256::digest;
 use std::cmp::Reverse;
+use futures::SinkExt;
 use tokio::sync::broadcast::{Receiver, Sender, channel};
 use uuid::Uuid;
 
@@ -14,6 +15,8 @@ use uuid::Uuid;
 pub struct IslandState {
     redis_connection: MultiplexedConnection,
     update_leaderboard: Sender<Vec<LeaderboardEntry>>,
+    update_comments: Sender<Vec<Comment>>,
+    update_top_images: Sender<Vec<TopImageEntry>>,
     bucket: Box<Bucket>,
     pub client: reqwest::Client,
 }
@@ -31,14 +34,14 @@ struct InternalTopImage {
     s3_path: String,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug, Clone)]
 pub struct TopImageEntry {
     pub person: String,
     pub image_score: u32,
     pub image: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Comment {
     pub name: String,
     pub content: String,
@@ -47,6 +50,8 @@ pub struct Comment {
 impl IslandState {
     pub async fn new() -> Result<Self, IslandError> {
         let (update_leaderboard, _) = channel(1);
+        let (update_comments, _) = channel(1);
+        let (update_top_images, _) = channel(1);
 
         let redis_connection = {
             let path = std::env::var("REDIS_PATH")?;
@@ -79,6 +84,8 @@ impl IslandState {
 
         Ok(Self {
             update_leaderboard,
+            update_comments,
+            update_top_images,
             redis_connection,
             bucket,
             client: reqwest::Client::new(),
@@ -113,6 +120,14 @@ impl IslandState {
 
     pub fn subscribe_to_update_leaderboard(&self) -> Receiver<Vec<LeaderboardEntry>> {
         self.update_leaderboard.subscribe()
+    }
+
+    pub fn subscribe_to_update_comments(&self) -> Receiver<Vec<Comment>> {
+        self.update_comments.subscribe()
+    }
+
+    pub fn subscribe_to_update_top_images(&self) -> Receiver<Vec<TopImageEntry>> {
+        self.update_top_images.subscribe()
     }
 
     async fn get_top_info(
@@ -154,15 +169,14 @@ impl IslandState {
         let mut current_top = Self::get_top_info(&mut redis_conn).await?;
 
         let mut index_to_insert = None;
-        if current_top.len() < 3 {
-            index_to_insert = Some(current_top.len());
-        } else {
-            for (i, info) in current_top.iter().enumerate() {
-                if info.image_score < image_score {
-                    index_to_insert = Some(i);
-                    break;
-                }
+        for (i, info) in current_top.iter().enumerate() {
+            if image_score > info.image_score {
+                index_to_insert = Some(i);
+                break;
             }
+        }
+        if current_top.len() < 3 && index_to_insert.is_none() {
+            index_to_insert = Some(current_top.len());
         }
 
         let Some(index_to_insert) = index_to_insert else {
@@ -182,9 +196,11 @@ impl IslandState {
         );
         current_top.truncate(3);
 
-        let jsoned_top = serde_json::to_string(&current_top)?;
 
+        let jsoned_top = serde_json::to_string(&current_top)?;
         redis_conn.set("top_img_info", jsoned_top).await?;
+
+        let _ = self.update_top_images.send(self.get_top_images().await?);
 
         Ok(())
     }
@@ -194,6 +210,8 @@ impl IslandState {
 
         let sered = serde_json::to_string(&comment)?;
         self.redis_connection.clone().hset("comments", id, sered).await?;
+
+        let _ = self.update_comments.send(self.get_all_comments().await?);
 
         Ok(())
     }

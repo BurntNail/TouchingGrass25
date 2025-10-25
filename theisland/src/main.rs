@@ -1,12 +1,14 @@
-use crate::backend::{get_asset, get_leaderboard, get_page, index, leaderboard_sse, post_comment, get_all_comments, submit_grass, top_images};
+use crate::backend::{get_asset, get_leaderboard, get_page, index, leaderboard_sse, post_comment, get_all_comments, submit_grass, top_images, comments_sse, top_images_sse};
 use crate::state::IslandState;
 use axum::Router;
 use axum::extract::DefaultBodyLimit;
 use axum::routing::{get, post};
 use tokio::net::TcpListener;
 use tower_http::cors::{AllowOrigin, CorsLayer};
-use tracing::info;
 use tracing_subscriber::{EnvFilter, FmtSubscriber};
+
+#[macro_use]
+extern crate tracing;
 
 mod backend;
 mod errors;
@@ -30,6 +32,8 @@ async fn main() {
         .route("/submit_grass", post(submit_grass))
         .route("/leaderboard", get(get_leaderboard))
         .route("/leaderboard_sse", get(leaderboard_sse))
+        .route("/comments_sse", get(comments_sse))
+        .route("/topimages_sse", get(top_images_sse))
         .route("/topimages", get(top_images))
         .route("/comment", post(post_comment))
         .route("/all_comments", get(get_all_comments))

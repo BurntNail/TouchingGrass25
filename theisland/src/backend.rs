@@ -13,7 +13,6 @@ use std::fmt::Display;
 use std::io::Cursor;
 use tokio_stream::StreamExt;
 use tokio_stream::wrappers::BroadcastStream;
-use tracing::info;
 
 #[derive(Deserialize)]
 pub struct SubmitGrassForm {
@@ -49,8 +48,6 @@ pub async fn submit_grass(
     let score = ((1.0 - average_distance / MAX_DISTANCE) * 100.0)
         .clamp(0.0, 100.0) as u32;
 
-    info!(?average_distance, ?score);
-
     state.add_score(name.clone(), score).await?;
     state
         .set_potential_top_image(name, score, file_contents)
@@ -73,7 +70,37 @@ pub async fn leaderboard_sse(
         .map(|lb| {
             let jsoned = serde_json::to_string(&lb)?;
             Ok(AxumSseEvent::default()
-                .event("new_leaderboard")
+                .event("update")
+                .data(jsoned))
+        });
+
+    Sse::new(stream).keep_alive(KeepAlive::default())
+}
+
+pub async fn top_images_sse(
+    State(state): State<IslandState>,
+) -> Sse<impl Stream<Item = Result<AxumSseEvent, IslandError>>> {
+    let stream = BroadcastStream::new(state.subscribe_to_update_top_images())
+        .filter_map(Result::ok)
+        .map(|lb| {
+            let jsoned = serde_json::to_string(&lb)?;
+            Ok(AxumSseEvent::default()
+                .event("update")
+                .data(jsoned))
+        });
+
+    Sse::new(stream).keep_alive(KeepAlive::default())
+}
+
+pub async fn comments_sse(
+    State(state): State<IslandState>,
+) -> Sse<impl Stream<Item = Result<AxumSseEvent, IslandError>>> {
+    let stream = BroadcastStream::new(state.subscribe_to_update_comments())
+        .filter_map(Result::ok)
+        .map(|lb| {
+            let jsoned = serde_json::to_string(&lb)?;
+            Ok(AxumSseEvent::default()
+                .event("update")
                 .data(jsoned))
         });
 
@@ -122,7 +149,6 @@ pub async fn get_with_path(
         .first()
         .unwrap()
         .to_string();
-    info!(?mime);
     let bytes = rsp.bytes().await?.to_vec();
 
     Ok(([(http::header::CONTENT_TYPE, mime)], bytes).into_response())
