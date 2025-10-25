@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Analysis — Forum</title>
+    <script src="comments.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         /* === Base === */
@@ -21,9 +23,17 @@
         }
 
         @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         header {
@@ -93,7 +103,7 @@
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 20px 25px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
         }
@@ -104,7 +114,7 @@
             font-weight: bold;
             color: white;
             margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 10px;
         }
 
@@ -153,7 +163,7 @@
             align-items: center;
             gap: 10px;
             margin-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
             padding-top: 10px;
         }
 
@@ -163,13 +173,13 @@
             border: none;
             border-radius: 25px;
             outline: none;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             font-size: 1rem;
         }
 
         .chat-input input::placeholder {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .chat-input button {
@@ -214,6 +224,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Green Analysis</h1>
@@ -228,36 +239,18 @@
         <div class="chat-header">Community Forum</div>
 
         <div class="chat-messages">
-            <div class="comment">
-                <div class="comment-content">
-                    <span class="username">EcoWarrior42</span>
-                    <span class="text">Welcome to the Green Analysis forum 🌿 Excited to see everyone’s projects!</span>
-                </div>
-            </div>
-
-            <div class="comment">
-                <div class="comment-content">
-                    <span class="username">GreenGuru</span>
-                    <span class="text">I just uploaded my image submission — can’t wait for feedback!</span>
-                </div>
-            </div>
-
-            <div class="comment">
-                
-                <div class="comment-content">
-                    <span class="username">NatureNerd</span>
-                    <span class="text">Loving the vibe here. Anyone else using drone shots for their greenery analysis?</span>
-                </div>
-            </div>
         </div>
 
-        <div class="chat-input">
-            <input type="text" placeholder="Username" />
-        </div>
-        <div class="chat-input">
-            <input type="text" placeholder="Add a public comment..." />
-            <button><i class="fas fa-paper-plane"></i></button>
-        </div>
+        <form action="https://theisland.fly.dev/comment" method="post">
+            <div class="chat-input">
+                <input type="text" name="name" placeholder="Username" />
+            </div>
+            <div class="chat-input">
+                <input type="text" name="content" placeholder="Add a public comment..." />
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </form>
+
 
     </div>
 
@@ -269,4 +262,5 @@
         </div>
     </footer>
 </body>
+
 </html>3
