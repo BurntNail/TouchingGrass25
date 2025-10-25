@@ -45,11 +45,16 @@
             font-size: 2rem;
             color: #fff;
             letter-spacing: 1px;
+            margin-left: 5%;
         }
 
         .button-container {
+            position: relative;
+            top: 0;
+            left: 0;
             display: flex;
             gap: 15px;
+            margin-right: 5%;
         }
 
         .fancy-button {
@@ -62,13 +67,22 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .fancy-button:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .fancy-button:active {
+            background-color: #1c5980;
+            transform: translateY(0);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
         }
 
         /* === Forum Layout === */
@@ -218,9 +232,13 @@
         </div>
 
         <div class="chat-input">
+            <input type="text" placeholder="Username" />
+        </div>
+        <div class="chat-input">
             <input type="text" placeholder="Add a public comment..." />
             <button><i class="fas fa-paper-plane"></i></button>
         </div>
+
     </div>
 
     <footer>
