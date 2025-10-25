@@ -75,25 +75,6 @@ function updateLeaderboard (json) {
 
     imageContainer.appendChild(imageColumn);
     imageContainer.appendChild(nameColumn);
-
-    // for (let imageEntry of json) {
-    //     let imageRow = document.createElement("tr");
-    //
-    //     let personElement = document.createElement("td");
-    //     personElement.innerText = imageEntry.person;
-    //     imageRow.appendChild(personElement);
-    //
-    //     let image_scoreElement = document.createElement("td");
-    //     image_scoreElement.innerText = imageEntry.image_score;
-    //     imageRow.appendChild(image_scoreElement);
-    //
-    //     let imageTableElement = document.createElement("td");
-    //     let actualImageElement = document.createElement("image");
-    //     actualImageElement.src = imageEntry.image;
-    //     imageTableElement.appendChild(actualImageElement);
-    //
-    //     imageRow.appendChild(imageTableElement);
-    // }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
