@@ -9,8 +9,23 @@ body {
     align-items: center;
     font-family: 'Poppins', sans-serif;
     /*background-size: cover;*/
-    background-size: auto;
-}
+    background-size: auto; /* Allow the image to repeat at its original size */
+    background-repeat: repeat;
+    background-position: center;
+    animation: backgroundFade 40s infinite;
+    animation-timing-function: ease-in-out;
+    }
+
+    @keyframes backgroundFade {
+        0% { background-image: url(/Assets/image1.jpg); }
+        16% { background-image: url(/Assets/image2.jpg); }
+        33% { background-image: url(/Assets/image3.jpg); }
+        49% { background-image: url(/Assets/image4.jpg); }
+        66% { background-image: url(/Assets/image5.jpg); }
+        83% { background-image: url(/Assets/image6.jpg); }
+        100% { background-image: url(/Assets/image1.jpg); }
+    }
+
 
 .container {
     max-width: 1200px;
@@ -91,9 +106,109 @@ title {
 }
 
 h1 {
-            font-size: 3rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
+    font-size: 3rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    margin-top: 80px; /* Add margin to avoid overlap with buttons */
+}
+
+.form-container label {
+    display: block;
+    margin: 10px 0 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    background: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-container button:hover {
+    background: #2980b9;
+}
+.blog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 90%;
+    max-width: 1600px;
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+.blog-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.blog-card img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.blog-card p {
+    color: rgb(36, 10, 65);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.blog-card .image-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.blog-card .image-left img {
+    width: 50%;
+}
+
+.blog-card .image-right {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 20px;
+}
+
+.blog-card .image-right img {
+    width: 50%;
+}
