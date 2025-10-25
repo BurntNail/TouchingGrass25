@@ -20,6 +20,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+.container-blur {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-shadow: 2px 2px 8px #c6ec1f
+}
 table {
     width: 80%;
     margin: 20px auto;
@@ -495,6 +500,7 @@ html {
     gap: 200px;                /* space between columns */
     max-width: 1200px;        /* optional max width */
     margin: 10px 0% 0px 0; /* center container and give bottom spacing */
+    
 }
 
 .text-columns .column {
@@ -503,4 +509,9 @@ html {
     max-width: 1000px;
     margin-right: 40px;
     margin-left: 40px;
+    /*background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;*/
+    text-shadow: 2px 2px 8px #c6ec1f
 }
