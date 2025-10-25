@@ -52,7 +52,7 @@
                         body: new URLSearchParams(form_body)
                     }).then(rsp => {
                         rsp.text().then(loc => {
-                            document.location = loc;
+                            document.location.href = loc;
                         })
                     })
                 });
@@ -71,7 +71,7 @@
     </header>
    
     <div class = "blog">
-        <title>Upload your image below and we'll tell you how green it is!</title>
+        <h1>Upload your image below and we'll tell you how green it is!</h1>
         <div class = "container">
             <div class = "form-container">
             <form action="theisland.fly.dev/submit_grass">

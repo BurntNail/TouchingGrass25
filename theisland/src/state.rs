@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 use sha256::digest;
 use std::cmp::Reverse;
 use tokio::sync::broadcast::{Receiver, Sender, channel};
-use tracing::error;
 use uuid::Uuid;
 
 #[derive(Clone)]
@@ -37,6 +36,12 @@ pub struct TopImageEntry {
     pub person: String,
     pub image_score: u32,
     pub image: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Comment {
+    pub name: String,
+    pub content: String,
 }
 
 impl IslandState {
@@ -80,30 +85,9 @@ impl IslandState {
         })
     }
 
-    pub async fn start_submission(&self) -> Result<Uuid, IslandError> {
-        let uuid = Uuid::new_v4();
-
-        self.redis_connection
-            .clone()
-            .sadd("valid_uuids", uuid.to_string())
-            .await?;
-
-        Ok(uuid)
-    }
-
-    pub async fn add_score(&self, uuid: Uuid, name: String, score: u32) -> Result<(), IslandError> {
-        let mut conn = self.redis_connection.clone();
-
-        let was_valid = conn.srem("valid_uuids", uuid.to_string()).await? > 0;
-
-        if was_valid {
-            conn.hincr("scores", name, score).await?;
-            drop(conn);
-
-            let _ = self.update_leaderboard.send(self.get_leaderboard().await?);
-        } else {
-            error!("tried to submit w/o getting start");
-        }
+    pub async fn add_score(&self, name: String, score: u32) -> Result<(), IslandError> {
+        self.redis_connection.clone().hincr("scores", name, score).await?;
+        let _ = self.update_leaderboard.send(self.get_leaderboard().await?);
 
         Ok(())
     }
@@ -203,5 +187,21 @@ impl IslandState {
         redis_conn.set("top_img_info", jsoned_top).await?;
 
         Ok(())
+    }
+
+    pub async fn add_comment (&self, comment: Comment) -> Result<(), IslandError> {
+        let id = Uuid::new_v4().to_string();
+
+        let sered = serde_json::to_string(&comment)?;
+        self.redis_connection.clone().hset("comments", id, sered).await?;
+
+        Ok(())
+    }
+
+    pub async fn get_all_comments (&self) -> Result<Vec<Comment>, IslandError> {
+        self.redis_connection.clone().hgetall("comments").await?
+            .into_iter()
+            .map(|(_, json)| serde_json::from_str(&json).map_err(IslandError::from))
+            .collect()
     }
 }

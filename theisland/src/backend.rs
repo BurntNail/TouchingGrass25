@@ -1,10 +1,7 @@
 use crate::errors::IslandError;
-use crate::state::{IslandState, LeaderboardEntry, TopImageEntry};
+use crate::state::{Comment, IslandState, LeaderboardEntry, TopImageEntry};
 use axum::extract::{Path, State};
-use axum::response::{
-    IntoResponse, Response, Sse,
-    sse::{Event as AxumSseEvent, KeepAlive},
-};
+use axum::response::{IntoResponse, Response, Sse, sse::{Event as AxumSseEvent, KeepAlive}, Redirect};
 use axum::{Form, Json};
 use base64::Engine;
 use base64::prelude::BASE64_STANDARD;
@@ -17,12 +14,6 @@ use std::io::Cursor;
 use tokio_stream::StreamExt;
 use tokio_stream::wrappers::BroadcastStream;
 use tracing::info;
-use uuid::Uuid;
-
-pub async fn start_grass(State(state): State<IslandState>) -> Result<Json<Uuid>, IslandError> {
-    let uuid = state.start_submission().await?;
-    Ok(Json(uuid))
-}
 
 #[derive(Deserialize)]
 pub struct SubmitGrassForm {
@@ -35,8 +26,6 @@ pub async fn submit_grass(
     State(state): State<IslandState>,
     Form(SubmitGrassForm { name, file }): Form<SubmitGrassForm>,
 ) -> Result<impl IntoResponse, IslandError> {
-    let uuid = state.start_submission().await?; //TODO: make this actually not just be useless lolll
-
     let file_contents = BASE64_STANDARD.decode(file.as_bytes())?;
     info!("decoded");
     let img = ImageReader::new(Cursor::new(&file_contents))
@@ -62,7 +51,7 @@ pub async fn submit_grass(
 
     info!(?average_distance, ?score);
 
-    state.add_score(uuid, name.clone(), score).await?;
+    state.add_score(name.clone(), score).await?;
     state
         .set_potential_top_image(name, score, file_contents)
         .await?;
@@ -137,4 +126,12 @@ pub async fn get_with_path(
     let bytes = rsp.bytes().await?.to_vec();
 
     Ok(([(http::header::CONTENT_TYPE, mime)], bytes).into_response())
+}
+
+pub async fn post_comment (State(state): State<IslandState>, Form(comment): Form<Comment>) -> Result<impl IntoResponse, IslandError>{
+    state.add_comment(comment).await?;
+    Ok(Redirect::to("/forums.html"))
+}
+pub async fn get_all_comments (State(state): State<IslandState>) -> Result<Json<Vec<Comment>>, IslandError> {
+    state.get_all_comments().await.map(Json)
 }
