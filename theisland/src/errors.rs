@@ -1,0 +1,28 @@
+use axum::http::StatusCode;
+use axum::response::{IntoResponse, Response};
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum IslandError {
+    #[error("error serialising/deserialising json")]
+    Json(#[from] serde_json::Error),
+    #[error("error parsing score")]
+    InvalidScore(#[from] std::num::ParseIntError),
+    #[error("error with multipart")]
+    Multipart(#[from] axum::extract::multipart::MultipartError),
+    #[error("error decoding base64")]
+    B64Decode(#[from] base64::DecodeError),
+    #[error("error with image")]
+    Image(#[from] image::error::ImageError)
+}
+
+impl IntoResponse for IslandError {
+    fn into_response(self) -> Response {
+        eprintln!("{self:?}");
+        match self {
+            Self::Json(_) | Self::Image(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            Self::InvalidScore(_) | Self::B64Decode(_) => StatusCode::BAD_REQUEST,
+            Self::Multipart(m) => m.status(),
+        }.into_response()
+    }
+}
