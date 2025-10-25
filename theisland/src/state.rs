@@ -7,7 +7,6 @@ use s3::{Bucket, Region};
 use serde::{Deserialize, Serialize};
 use sha256::digest;
 use std::cmp::Reverse;
-use futures::SinkExt;
 use tokio::sync::broadcast::{Receiver, Sender, channel};
 use uuid::Uuid;
 

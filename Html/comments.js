@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sse = new EventSource("https://theisland.fly.dev/comments_sse");
     sse.onmessage = (event) => {
         let json = JSON.parse(event.data);
+        console.log("recv n comments, where n = " + json.length);
         updateComments(json);
     };
 });
