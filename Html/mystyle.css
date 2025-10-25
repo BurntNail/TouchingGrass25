@@ -16,17 +16,6 @@ body {
     animation-timing-function: ease-in-out;
     }
 
-    @keyframes backgroundFade {
-        0% { background-image: url(/Assets/image1.jpg); }
-        16% { background-image: url(/Assets/image2.jpg); }
-        33% { background-image: url(/Assets/image3.jpg); }
-        49% { background-image: url(/Assets/image4.jpg); }
-        66% { background-image: url(/Assets/image5.jpg); }
-        83% { background-image: url(/Assets/image6.jpg); }
-        100% { background-image: url(/Assets/image1.jpg); }
-    }
-
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
