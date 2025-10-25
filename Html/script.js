@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 rankElement.innerText = rank;
                 row.appendChild(rankElement);
                 if (rank <= 3) {
-                    rankElement.style.color = "LightGreen";
+                    rankElement.style.color = "ForestGreen";
                 } else {
                     rankElement.style.color = "black";
                 }
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nameElement.innerText = leaderboardEntry.person;
                 row.appendChild(nameElement);
                 if (rank <= 3) {
-                    nameElement.style.color = "LightGreen";
+                    nameElement.style.color = "ForestGreen";
                 } else {
                     nameElement.style.color = "black";
                 }
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 scoreElement.innerText = leaderboardEntry.score;
                 row.appendChild(scoreElement);
                 if (rank <= 3) {
-                    scoreElement.style.color = "LightGreen";
+                    scoreElement.style.color = "ForestGreen";
                 } else {
                     scoreElement.style.color = "black";
                 }
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     webImage.then(response => {
         response.json().then(data => {
-            const imageContainer = document.querySelector("div#image_container");
+            const imageContainer = document.querySelector(".leaderboard-section");
 
             const imageColumn = document.createElement("div");
             imageColumn.classList.add("image-column");

@@ -470,3 +470,8 @@ html {
   object-fit: cover;
 }
 
+.Footer-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: white;
+}
